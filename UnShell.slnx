@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="UnShell.Sample/UnShell.Sample.csproj" />
+  <Project Path="UnShell/UnShell.csproj" />
+</Solution>
