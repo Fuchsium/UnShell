@@ -8,10 +8,11 @@ public sealed class ParsingContext
 {
     private readonly Dictionary<string, InstructionParser> _instructions = [];
     private readonly Dictionary<string, int> _variables = [];
+    private readonly List<ParseError> _errors = [];
     private int _variableCounter = 0;
     
     public IReadOnlyDictionary<string, InstructionParser> Instructions => _instructions;
-    public ICollection<ParseError> Errors {get;} = [];
+    public ICollection<ParseError> Errors => _errors;
 
     internal ParsingContext() {}
 
@@ -55,9 +56,14 @@ public sealed class ParsingContext
         var name = Encoding.UTF8.GetString(lexer.TokenSpan);
         if(!_instructions.TryGetValue(name, out var parser))
         {
-            Errors.Add(new ParseError(lexer.TokenLine, lexer.TokenColumn, "Unknown instruction"));
+            Errors.Add(new ParseError(lexer.TokenLine, lexer.TokenColumn, $"Unknown instruction \"{name}\""));
             return null;
         }
         return parser.ParseInstruction(ref lexer, this);
+    }
+
+    public void ClearErrors()
+    {
+        _errors.Clear();
     }
 }
