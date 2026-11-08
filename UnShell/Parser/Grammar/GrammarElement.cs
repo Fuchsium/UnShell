@@ -125,8 +125,11 @@ public sealed class LiteralGrammarElement : GrammarElement
             if(!Optional && !inOptionalGroup)
             {
                 context.Errors.Add(new ParseError(lexer.TokenLine, lexer.TokenColumn, "Unexpected end of instruction"));
+                return null;
+            } else
+            {
+                return [];
             }
-            return null;
         }
 
         var expr = Expression.FromToken(ref lexer, context);

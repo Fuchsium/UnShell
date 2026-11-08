@@ -12,11 +12,13 @@ public sealed class Script
         _engine = engine;
     }
 
-    public void Execute()
+    public object? Execute()
     {
+        object? lastResult = null;
         foreach(var instruction in _instructions)
         {
-            instruction.Execute(_engine.ExecutionContext);
+            lastResult = instruction.Execute(_engine.ExecutionContext);
         }
+        return lastResult;
     }
 }

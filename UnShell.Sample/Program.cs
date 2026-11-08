@@ -3,7 +3,7 @@ using UnShell.Runtime;
 
 var engine = new Engine();
 
-var lexer = new Utf8Lexer(" echo hi"u8);
+var lexer = new Utf8Lexer("echo hi"u8);
 var script = engine.ParseScript(ref lexer);
 
 if(engine.ParsingContext.Errors.Count > 0)
